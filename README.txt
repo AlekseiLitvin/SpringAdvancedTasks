@@ -8,5 +8,3 @@ Auditorium name: Auditorium name
 #For batch uploading
 tickets.csv (stored in root folder)
 User id - 1
-
-In case of any questions please contact me via email: Aliaksei_Litvin@epam.com
