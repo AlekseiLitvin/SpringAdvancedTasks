@@ -26,14 +26,14 @@ public class BirthdayStrategyTest {
 
     @org.junit.Test
     public void testCalculateDiscount_UserHasDiscount() throws Exception {
-        User userWithDiscount = new User("test@ema.il", "Test Name", LocalDate.now());
+        User userWithDiscount = new User("test@ema.il", "Test Name", LocalDate.now(), "$2a$04$X9yLljELD0.PllShvNmEUe2LpZVkhp9jVilGQ8nyfbRxJC3AdWgcW");
         double discount = strategy.calculateDiscount(userWithDiscount);
         assertEquals("User: [" + userWithDiscount + "] has birthday discount", strategy.birthdayDiscountValue, discount, 0.00001);
     }
 
     @org.junit.Test
     public void testCalculateDiscount_UserHasNoDiscount() throws Exception {
-        User userWithoutDiscount = new User("test@ema.il", "Test Name", LocalDate.now().minus(1, ChronoUnit.DAYS));
+        User userWithoutDiscount = new User("test@ema.il", "Test Name", LocalDate.now().minus(1, ChronoUnit.DAYS), "$2a$04$X9yLljELD0.PllShvNmEUe2LpZVkhp9jVilGQ8nyfbRxJC3AdWgcW");
         double discount = strategy.calculateDiscount(userWithoutDiscount);
         assertEquals("User: [" + userWithoutDiscount + "] doesn't have birthday discount", strategy.defaultDiscountValue, discount, 0.00001);
     }

@@ -4,7 +4,7 @@
 </head>
 <body>
 Get purchased tickets for event
-<form method="get" action="/ticketsForEvent">
+<form method="get" action="/bm/ticketsForEvent">
     Event name
     <input type="text" name="eventName"><br>
     Event date
@@ -16,7 +16,7 @@ Get purchased tickets for event
 <br>
 <br>
 Book tickets:
-<form method="post" action="/bookTickets" enctype="multipart/form-data">
+<form method="post" action="/auth/bookTickets" enctype="multipart/form-data">
     Tickets CSV file
     <input type="file" name="ticketsCsv">
     User ID
@@ -25,7 +25,7 @@ Book tickets:
 </form>
 <br><br>
 Get booked tickets in PDF format
-<form method="get" action="/ticketspdf">
+<form method="get" action="/bm/ticketspdf">
     Event name
     <input type="text" name="eventName"><br>
     Event date

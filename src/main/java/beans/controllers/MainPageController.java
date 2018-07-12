@@ -65,7 +65,13 @@ public class MainPageController {
         return "mainPage";
     }
 
-    @RequestMapping(value = "/ticketsForEvent", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginPage() {
+        bookingServicePopulator.populate();
+        return "loginPage";
+    }
+
+    @RequestMapping(value = "/bm/ticketsForEvent", method = RequestMethod.GET)
     public String purchasedTicketsForEvent(HttpServletRequest request, Model model) {
         String eventName = request.getParameter("eventName");
         String eventDate = request.getParameter("eventDate");
@@ -77,7 +83,7 @@ public class MainPageController {
         return "resultPage";
     }
 
-    @RequestMapping(value = "/bookTickets", method = RequestMethod.POST)
+    @RequestMapping(value = "/auth/bookTickets", method = RequestMethod.POST)
     public String bookTickets(@RequestParam("ticketsCsv") MultipartFile ticketsCsv,
                               @RequestParam("userId") long userId,
                               Model model) throws IOException {
@@ -99,7 +105,7 @@ public class MainPageController {
         return "mainPage";
     }
 
-    @RequestMapping(value = "/ticketspdf", headers = "Accept=application/pdf",  produces = "application/pdf", method = RequestMethod.GET)
+    @RequestMapping(value = "/bm/ticketspdf", headers = "Accept=application/pdf",  produces = "application/pdf", method = RequestMethod.GET)
     public String ticketsPdf(HttpServletRequest request, HttpServletResponse response, Model model) {
         String eventName = request.getParameter("eventName");
         String eventDate = request.getParameter("eventDate");
@@ -109,6 +115,11 @@ public class MainPageController {
         model.addAttribute("purchasedTicketsForEvent", purchasedTicketsForEvent);
 
         return "bookedTicketsPdfView";
+    }
+
+    @RequestMapping(value = "/accessDenied")
+    public String accessDeniedPage() {
+        return "accessDenied";
     }
 
 }

@@ -10,27 +10,31 @@ import java.time.LocalDate;
  */
 public class User {
 
-    private long      id;
-    private String    email;
-    private String    name;
+    private long id;
+    private String email;
+    private String name;
     private LocalDate birthday;
+    private String password;
+    private UserRole role;
 
     public User() {
     }
 
-    public User(long id, String email, String name, LocalDate birthday) {
+    public User(long id, String email, String name, LocalDate birthday, String password, UserRole userRole) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.birthday = birthday;
+        this.password = password;
+        this.role = userRole;
     }
 
-    public User(String email, String name, LocalDate birthday) {
-        this(-1, email, name, birthday);
+    public User(String email, String name, LocalDate birthday, String password) {
+        this(-1, email, name, birthday, password, UserRole.REGISTERED_USER);
     }
 
     public User withId(long id) {
-        return new User(id, email, name, birthday);
+        return new User(id, email, name, birthday, password, UserRole.REGISTERED_USER);
     }
 
     public long getId() {
@@ -65,6 +69,22 @@ public class User {
         this.birthday = birthday;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -96,10 +116,10 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-               "id=" + id +
-               ", email='" + email + '\'' +
-               ", name='" + name + '\'' +
-               ", birthday=" + birthday +
-               '}';
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", birthday=" + birthday +
+                '}';
     }
 }
