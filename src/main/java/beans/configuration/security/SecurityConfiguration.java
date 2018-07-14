@@ -8,14 +8,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
-@EnableWebSecurity()
+import javax.sql.DataSource;
+
+@EnableWebSecurity
 @Configuration
 @ComponentScan("beans")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -23,6 +27,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     @Qualifier("customUserDetailsService")
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private PersistentTokenRepository tokenRepository;
+
 
     @Autowired
     public void registerGlobalAuthentication(AuthenticationManagerBuilder auth) throws Exception {
@@ -48,12 +56,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/", "/login").permitAll()
-                .antMatchers("/auth/**").access("hasRole('REGISTERED_USER') and hasRole('BOOKING_MANAGER')")
+                .antMatchers("/auth/**").access("hasRole('REGISTERED_USER') or hasRole('BOOKING_MANAGER')")
                 .antMatchers("/bm/**").access("hasRole('BOOKING_MANAGER')")
                 .and().formLogin().loginPage("/login")
                 .usernameParameter("user_email").passwordParameter("user_password").successForwardUrl("/")
-                .and().csrf()
-                .and().exceptionHandling().accessDeniedPage("/accessDenied");
+                .and().rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository).tokenValiditySeconds(60_000)
+                .and().exceptionHandling().accessDeniedPage("/accessDenied")
+                .and().csrf().disable();
+    }
+
+    @Bean
+    public PersistentTokenBasedRememberMeServices getPersistentTokenBasedRememberMeServices() {
+        return new PersistentTokenBasedRememberMeServices(
+                "remember-me", userDetailsService, tokenRepository);
     }
 
 }
