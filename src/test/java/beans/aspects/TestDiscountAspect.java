@@ -11,6 +11,7 @@ import beans.daos.mocks.UserDAOMock;
 import beans.models.Event;
 import beans.models.Ticket;
 import beans.models.User;
+import beans.models.UserRole;
 import beans.services.BookingService;
 import beans.services.EventService;
 import beans.services.discount.BirthdayStrategy;
@@ -91,7 +92,7 @@ public class TestDiscountAspect {
     public void testCalculateDiscount() {
         Event event = (Event) applicationContext.getBean("testEvent1");
         User user = (User) applicationContext.getBean("testUser1");
-        User discountUser = new User(user.getId(), user.getEmail(), user.getName(), LocalDate.now());
+        User discountUser = new User(user.getId(), user.getEmail(), user.getName(), LocalDate.now(), "$2a$04$X9yLljELD0.PllShvNmEUe2LpZVkhp9jVilGQ8nyfbRxJC3AdWgcW", UserRole.REGISTERED_USER.name());
         Ticket ticket1 = (Ticket) applicationContext.getBean("testTicket1");
         bookingService.bookTicket(discountUser,
                                   new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(5, 6), user, ticket1.getPrice()));

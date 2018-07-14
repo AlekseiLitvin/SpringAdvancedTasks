@@ -8,8 +8,6 @@ import beans.populator.BookingServicePopulator;
 import beans.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -58,8 +56,11 @@ public class BookingServicePopulatorImpl implements BookingServicePopulator {
         Auditorium redHall = auditoriumService.getByName("Red hall");
         LocalDateTime dateOfEvent = LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(15, 45, 0));
 
-        userService.register(new User(email, name, LocalDate.now()));
-        userService.register(new User("laory@yandex.ru", name, LocalDate.of(1992, 4, 29)));
+        userService.register(new User(email, name, LocalDate.now(), "$2a$04$X9yLljELD0.PllShvNmEUe2LpZVkhp9jVilGQ8nyfbRxJC3AdWgcW"));
+
+        User user = new User("laory@yandex.ru", name, LocalDate.of(1992, 4, 29), "$2a$04$X9yLljELD0.PllShvNmEUe2LpZVkhp9jVilGQ8nyfbRxJC3AdWgcW");
+        user.setRoles(UserRole.BOOKING_MANAGER.name());
+        userService.register(user);
 
         User userByEmail = userService.getUserByEmail(email);
         System.out.println("User with email: [" + email + "] is " + userByEmail);

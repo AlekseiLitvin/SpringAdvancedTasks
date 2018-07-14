@@ -44,4 +44,6 @@ public class WebConfig {
         multipartResolver.setMaxUploadSizePerFile(1048576);
         return multipartResolver;
     }
+
+
 }
