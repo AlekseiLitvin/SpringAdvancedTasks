@@ -1,6 +1,8 @@
 package beans.models;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,26 +17,26 @@ public class User {
     private String name;
     private LocalDate birthday;
     private String password;
-    private UserRole role;
+    private String roles;
 
     public User() {
     }
 
-    public User(long id, String email, String name, LocalDate birthday, String password, UserRole userRole) {
+    public User(long id, String email, String name, LocalDate birthday, String password, String roles) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.birthday = birthday;
         this.password = password;
-        this.role = userRole;
+        this.roles = roles;
     }
 
     public User(String email, String name, LocalDate birthday, String password) {
-        this(-1, email, name, birthday, password, UserRole.REGISTERED_USER);
+        this(-1, email, name, birthday, password, UserRole.REGISTERED_USER.name());
     }
 
     public User withId(long id) {
-        return new User(id, email, name, birthday, password, UserRole.REGISTERED_USER);
+        return new User(id, email, name, birthday, password, UserRole.REGISTERED_USER.name());
     }
 
     public long getId() {
@@ -77,12 +79,12 @@ public class User {
         this.password = password;
     }
 
-    public UserRole getRole() {
-        return role;
+    public String getRoles() {
+        return roles;
     }
 
-    public void setRole(UserRole role) {
-        this.role = role;
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
     @Override
