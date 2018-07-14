@@ -1,12 +1,10 @@
 Suggested test data
+Verified on Tomcat 8.5.28
 
-#For getting booking tickets, and PDF view
-Event name: The revenant
-Event name: 2015-02-05T21:18
-Auditorium name: Auditorium name
-
-#For batch uploading
-tickets.csv (stored in root folder)
-User id - 1
-
-In case of any questions please contact me via email: Aliaksei_Litvin@epam.com
+#Login credentials
+    #REGISTERED_USER role
+        email - dmitriy.vbabichev@gmail.com
+        password - 1234
+    #BOOKING_MANAGER role
+        email - laory@yandex.ru
+        password - 1234
