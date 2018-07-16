@@ -173,7 +173,7 @@ public class EventServiceImplTest {
         List<Event> after = eventService.getAll();
         before.remove(event);
         before.add(new Event(event.getId(), event.getName(), event.getRate(), event.getBasePrice(),
-                             testEvent.getDateTime(), testEvent.getAuditorium()));
+                             testEvent.getDateTime(), testEvent.getAuditorium(), 100));
         System.out.println("before = " + before);
         System.out.println("after = " + after);
         assertTrue("Events should match", before.containsAll(after));

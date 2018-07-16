@@ -1,6 +1,7 @@
 package beans.services.discount;
 
 import beans.models.User;
+import beans.models.UserAccount;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -26,14 +27,14 @@ public class BirthdayStrategyTest {
 
     @org.junit.Test
     public void testCalculateDiscount_UserHasDiscount() throws Exception {
-        User userWithDiscount = new User("test@ema.il", "Test Name", LocalDate.now(), "$2a$04$X9yLljELD0.PllShvNmEUe2LpZVkhp9jVilGQ8nyfbRxJC3AdWgcW");
+        User userWithDiscount = new User("test@ema.il", "Test Name", LocalDate.now(), "$2a$04$X9yLljELD0.PllShvNmEUe2LpZVkhp9jVilGQ8nyfbRxJC3AdWgcW", new UserAccount(100));
         double discount = strategy.calculateDiscount(userWithDiscount);
         assertEquals("User: [" + userWithDiscount + "] has birthday discount", strategy.birthdayDiscountValue, discount, 0.00001);
     }
 
     @org.junit.Test
     public void testCalculateDiscount_UserHasNoDiscount() throws Exception {
-        User userWithoutDiscount = new User("test@ema.il", "Test Name", LocalDate.now().minus(1, ChronoUnit.DAYS), "$2a$04$X9yLljELD0.PllShvNmEUe2LpZVkhp9jVilGQ8nyfbRxJC3AdWgcW");
+        User userWithoutDiscount = new User("test@ema.il", "Test Name", LocalDate.now().minus(1, ChronoUnit.DAYS), "$2a$04$X9yLljELD0.PllShvNmEUe2LpZVkhp9jVilGQ8nyfbRxJC3AdWgcW", new UserAccount(100));
         double discount = strategy.calculateDiscount(userWithoutDiscount);
         assertEquals("User: [" + userWithoutDiscount + "] doesn't have birthday discount", strategy.defaultDiscountValue, discount, 0.00001);
     }

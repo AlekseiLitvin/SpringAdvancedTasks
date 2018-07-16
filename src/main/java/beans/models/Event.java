@@ -10,31 +10,35 @@ import java.time.LocalDateTime;
  */
 public class Event {
 
-    private long          id;
-    private String        name;
-    private Rate          rate;
-    private double        basePrice;
+    private long id;
+    private String name;
+    private Rate rate;
+    private double basePrice;
     private LocalDateTime dateTime;
-    private Auditorium    auditorium;
+    private Auditorium auditorium;
+    private int ticketPrice;
+
+    private static final int DEFAULT_TICKET_PRICE = 100;
 
     public Event() {
     }
 
     public Event(String name, Rate rate, double basePrice, LocalDateTime dateTime, Auditorium auditorium) {
-        this(-1, name, rate, basePrice, dateTime, auditorium);
+        this(-1, name, rate, basePrice, dateTime, auditorium, DEFAULT_TICKET_PRICE);
     }
 
-    public Event(long id, String name, Rate rate, double basePrice, LocalDateTime dateTime, Auditorium auditorium) {
+    public Event(long id, String name, Rate rate, double basePrice, LocalDateTime dateTime, Auditorium auditorium, int ticketPrice) {
         this.id = id;
         this.name = name;
         this.rate = rate;
         this.basePrice = basePrice;
         this.dateTime = dateTime;
         this.auditorium = auditorium;
+        this.ticketPrice = ticketPrice;
     }
 
     public Event withId(Long eventId) {
-        return new Event(eventId, this.name, this.rate, this.basePrice, this.dateTime, this.auditorium);
+        return new Event(eventId, this.name, this.rate, this.basePrice, this.dateTime, this.auditorium, this.ticketPrice);
     }
 
     public long getId() {
@@ -85,6 +89,14 @@ public class Event {
         this.auditorium = auditorium;
     }
 
+    public int getTicketPrice() {
+        return ticketPrice;
+    }
+
+    public void setTicketPrice(int ticketPrice) {
+        this.ticketPrice = ticketPrice;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -125,12 +137,12 @@ public class Event {
     @Override
     public String toString() {
         return "Event{" +
-               "id=" + id +
-               ", name='" + name + '\'' +
-               ", rate=" + rate +
-               ", basePrice=" + basePrice +
-               ", dateTime=" + dateTime +
-               ", auditorium=" + auditorium +
-               '}';
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", rate=" + rate +
+                ", basePrice=" + basePrice +
+                ", dateTime=" + dateTime +
+                ", auditorium=" + auditorium +
+                '}';
     }
 }

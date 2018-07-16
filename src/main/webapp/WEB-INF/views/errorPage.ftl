@@ -4,6 +4,8 @@
 </head>
 <body>
     Error occurred during request processing:
-    ${exception.message}
+    <#if exception??>
+        ${exception}
+    </#if>
 </body>
 </html>

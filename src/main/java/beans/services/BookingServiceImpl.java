@@ -146,7 +146,7 @@ public class BookingServiceImpl implements BookingService {
         if (!seatsAreAlreadyBooked)
             bookingDAO.create(user, ticket);
         else
-            throw new IllegalStateException("Unable to book ticket: [" + ticket + "]. Seats are already booked.");
+            throw new IllegalStateException("Seats are already booked.");
 
         return ticket;
     }

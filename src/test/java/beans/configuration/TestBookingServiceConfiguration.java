@@ -66,23 +66,23 @@ public class TestBookingServiceConfiguration {
     @Bean
     public Event testEvent1() {
         return new Event(1, "Test event", beans.models.Rate.HIGH, 124.0, java.time.LocalDateTime.of(2016, 2, 6, 14, 45, 0),
-                         testHall1());
+                         testHall1(), 100);
     }
 
     @Bean
     public Event testEvent2() {
         return new Event(2, "Test event2", Rate.MID, 500.0, java.time.LocalDateTime.of(2016, 12, 6, 9, 35, 0),
-                         testHall2());
+                         testHall2(), 100);
     }
 
     @Bean
     public User testUser1() {
-        return new User(0, "dmitriy.vbabichev@gmail.com", "Dmytro Babichev", java.time.LocalDate.of(1992, 4, 29), "$2a$04$X9yLljELD0.PllShvNmEUe2LpZVkhp9jVilGQ8nyfbRxJC3AdWgcW", UserRole.REGISTERED_USER.name());
+        return new User(0, "dmitriy.vbabichev@gmail.com", "Dmytro Babichev", java.time.LocalDate.of(1992, 4, 29), "$2a$04$X9yLljELD0.PllShvNmEUe2LpZVkhp9jVilGQ8nyfbRxJC3AdWgcW", UserRole.REGISTERED_USER.name(), new UserAccount(100));
     }
 
     @Bean
     public User testUser2() {
-        return new User(1, "laory@yandex.ru", "Dmytro Babichev", java.time.LocalDate.of(1992, 4, 29), "$2a$04$X9yLljELD0.PllShvNmEUe2LpZVkhp9jVilGQ8nyfbRxJC3AdWgcW", UserRole.REGISTERED_USER.name());
+        return new User(1, "laory@yandex.ru", "Dmytro Babichev", java.time.LocalDate.of(1992, 4, 29), "$2a$04$X9yLljELD0.PllShvNmEUe2LpZVkhp9jVilGQ8nyfbRxJC3AdWgcW", UserRole.REGISTERED_USER.name(), new UserAccount(100));
     }
 
     @Bean
