@@ -110,7 +110,7 @@ public class MainPageController {
             int eventPrice = Integer.parseInt(ticketBooking[PRICE_INDEX]);
             Ticket ticket = new Ticket(event, eventDate, seats, user, eventPrice);
 
-            int ticketPrice = ticket.getEvent().getTicketPrice();
+            double ticketPrice = ticket.getEvent().getBasePrice();
             if (prepaidMoney >= ticketPrice) {
                 prepaidMoney -= ticket.getEvent().getBasePrice();
                 bookingService.bookTicket(user, ticket);

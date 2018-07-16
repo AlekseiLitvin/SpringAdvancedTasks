@@ -16,29 +16,25 @@ public class Event {
     private double basePrice;
     private LocalDateTime dateTime;
     private Auditorium auditorium;
-    private int ticketPrice;
-
-    private static final int DEFAULT_TICKET_PRICE = 100;
 
     public Event() {
     }
 
     public Event(String name, Rate rate, double basePrice, LocalDateTime dateTime, Auditorium auditorium) {
-        this(-1, name, rate, basePrice, dateTime, auditorium, DEFAULT_TICKET_PRICE);
+        this(-1, name, rate, basePrice, dateTime, auditorium);
     }
 
-    public Event(long id, String name, Rate rate, double basePrice, LocalDateTime dateTime, Auditorium auditorium, int ticketPrice) {
+    public Event(long id, String name, Rate rate, double basePrice, LocalDateTime dateTime, Auditorium auditorium) {
         this.id = id;
         this.name = name;
         this.rate = rate;
         this.basePrice = basePrice;
         this.dateTime = dateTime;
         this.auditorium = auditorium;
-        this.ticketPrice = ticketPrice;
     }
 
     public Event withId(Long eventId) {
-        return new Event(eventId, this.name, this.rate, this.basePrice, this.dateTime, this.auditorium, this.ticketPrice);
+        return new Event(eventId, this.name, this.rate, this.basePrice, this.dateTime, this.auditorium);
     }
 
     public long getId() {
@@ -87,14 +83,6 @@ public class Event {
 
     public void setAuditorium(Auditorium auditorium) {
         this.auditorium = auditorium;
-    }
-
-    public int getTicketPrice() {
-        return ticketPrice;
-    }
-
-    public void setTicketPrice(int ticketPrice) {
-        this.ticketPrice = ticketPrice;
     }
 
     @Override

@@ -57,7 +57,7 @@ public class EventServiceImpl implements EventService {
     }
 
     public Event assignAuditorium(Event event, Auditorium auditorium, LocalDateTime date) {
-        final Event updatedEvent = new Event(event.getId(), event.getName(), event.getRate(), event.getBasePrice(), date, auditorium, 100);
+        final Event updatedEvent = new Event(event.getId(), event.getName(), event.getRate(), event.getBasePrice(), date, auditorium);
         return eventDAO.update(updatedEvent);
     }
 }
