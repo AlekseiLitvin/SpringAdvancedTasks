@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://spring.io/guides/gs-producing-web-service">
+
+
+    <xs:element name="getUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="user" type="user"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="user">
+        <xs:sequence>
+            <xs:element name="birthday" type="localDate" minOccurs="0"/>
+            <xs:element name="email" type="xs:string" minOccurs="0"/>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="name" type="xs:string" minOccurs="0"/>
+            <xs:element name="password" type="xs:string" minOccurs="0"/>
+            <xs:element name="roles" type="xs:string" minOccurs="0"/>
+            <xs:element name="userAccount" type="userAccount" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="localDate" final="extension restriction">
+        <xs:sequence/>
+    </xs:complexType>
+
+    <xs:complexType name="userAccount">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="prepaidMoney" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
+
