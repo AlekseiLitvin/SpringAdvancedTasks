@@ -4,9 +4,11 @@ import beans.daos.BookingDAO;
 import beans.models.Event;
 import beans.models.Ticket;
 import beans.models.User;
+import beans.models.UserAccount;
 import beans.populator.BookingServicePopulator;
 import beans.services.BookingService;
 import beans.services.EventService;
+import beans.services.UserAccountService;
 import beans.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -62,6 +64,9 @@ public class MainPageController {
     @Autowired
     private EventService eventService;
 
+    @Autowired
+    private UserAccountService userAccountService;
+
     @RequestMapping(value = "/")
     public String mainPage() {
         bookingServicePopulator.populate();
@@ -92,6 +97,9 @@ public class MainPageController {
                               Model model) throws IOException {
         Scanner scanner = new Scanner(new ByteArrayInputStream(ticketsCsv.getBytes()));
         User user = userService.getById(userId);
+        UserAccount userAccount = user.getUserAccount();
+        int prepaidMoney = userAccount.getPrepaidMoney();
+        int bookedTicketsCount = 0;
         while (scanner.hasNextLine()) {
             String[] ticketBooking = scanner.nextLine().split(DELIMITER);
             Event event = eventService.getByName(ticketBooking[EVENT_NAME_INDEX]).get(0);
@@ -101,10 +109,21 @@ public class MainPageController {
                     .collect(Collectors.toList());
             int eventPrice = Integer.parseInt(ticketBooking[PRICE_INDEX]);
             Ticket ticket = new Ticket(event, eventDate, seats, user, eventPrice);
-            bookingService.bookTicket(user, ticket);
-        }
 
-        model.addAttribute("bookingMessage", "Booking successful");
+            double ticketPrice = ticket.getEvent().getBasePrice();
+            if (prepaidMoney >= ticketPrice) {
+                prepaidMoney -= ticket.getEvent().getBasePrice();
+                bookingService.bookTicket(user, ticket);
+                bookedTicketsCount++;
+            } else {
+                model.addAttribute("bookingMessage", "Not enough money, booked tickets number: " + bookedTicketsCount);
+                return "mainPage";
+            }
+
+        }
+        userAccount.setPrepaidMoney(prepaidMoney);
+        userAccountService.update(userAccount);
+        model.addAttribute("bookingMessage", "Booking successful, booked tickets number: " + bookedTicketsCount);
         return "mainPage";
     }
 

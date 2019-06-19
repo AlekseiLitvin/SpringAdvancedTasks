@@ -48,7 +48,7 @@ public class DbSessionFactory {
         }});
         localSessionFactoryBean.setMappingResources("/mappings/auditorium.hbm.xml", "/mappings/event.hbm.xml",
                                                     "/mappings/ticket.hbm.xml", "/mappings/user.hbm.xml",
-                                                    "/mappings/booking.hbm.xml", "/mappings/persistent_login.hbm.xml");
+                                                    "/mappings/booking.hbm.xml", "/mappings/persistent_login.hbm.xml", "/mappings/user_account.hbm.xml");
         return localSessionFactoryBean;
     }
 

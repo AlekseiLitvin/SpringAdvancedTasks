@@ -41,6 +41,10 @@ public class BookingServicePopulatorImpl implements BookingServicePopulator {
     @Autowired
     private DiscountService discountService;
 
+    @Autowired
+    @Qualifier("userAccountServiceImpl")
+    private UserAccountService userAccountService;
+
     @Override
     public void populate() {
         if (isDatabasePopulated) {
@@ -51,14 +55,24 @@ public class BookingServicePopulatorImpl implements BookingServicePopulator {
         String name = "Dmytro Babichev";
         String eventName = "The revenant";
         String auditoriumName = "Blue hall";
+        String password = "$2a$04$X9yLljELD0.PllShvNmEUe2LpZVkhp9jVilGQ8nyfbRxJC3AdWgcW";
         Auditorium blueHall = auditoriumService.getByName(auditoriumName);
         Auditorium yellowHall = auditoriumService.getByName("Yellow hall");
         Auditorium redHall = auditoriumService.getByName("Red hall");
         LocalDateTime dateOfEvent = LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(15, 45, 0));
 
-        userService.register(new User(email, name, LocalDate.now(), "$2a$04$X9yLljELD0.PllShvNmEUe2LpZVkhp9jVilGQ8nyfbRxJC3AdWgcW"));
-
-        User user = new User("laory@yandex.ru", name, LocalDate.of(1992, 4, 29), "$2a$04$X9yLljELD0.PllShvNmEUe2LpZVkhp9jVilGQ8nyfbRxJC3AdWgcW");
+        UserAccount userAccount = new UserAccount(500);
+        userAccountService.save(userAccount);
+        userService.register(new User(email,
+                name,
+                LocalDate.now(),
+                password,
+                userAccount));
+        User user = new User("laory@yandex.ru",
+                name,
+                LocalDate.of(1992, 4, 29),
+                password,
+                userAccount);
         user.setRoles(UserRole.BOOKING_MANAGER.name());
         userService.register(user);
 
